@@ -1,4 +1,4 @@
-package com.example.consumirapi.presentacion.models;
+package com.example.consumirapi.http.models;
 
 import com.example.consumirapi.dominio.entidadesDominio.EstadoCategoria;
 

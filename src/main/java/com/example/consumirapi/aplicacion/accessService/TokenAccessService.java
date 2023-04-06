@@ -1,4 +1,4 @@
-package com.example.consumirapi.aplicacion.serviciosDistribuido;
+package com.example.consumirapi.aplicacion.accessService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;

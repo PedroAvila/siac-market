@@ -23,8 +23,8 @@ public class CategoriaRepository implements ICategoriaRepository {
 
     @Override
     public List<Categoria> findAll() {
-        //return categoriaRepository.findAll();
-        throw new RuntimeException("Error al buscar categorías"); //*Para simular una excepción*
+        return categoriaRepository.findAll();
+        //throw new RuntimeException("Error al buscar categorías"); //*Para simular una excepción*
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.consumirapi.presentacion;
+package com.example.consumirapi.http;
 
 import com.example.consumirapi.infraestructuraTransversal.operaciones.exceptions.*;
 import org.springframework.data.crossstore.ChangeSetPersister;

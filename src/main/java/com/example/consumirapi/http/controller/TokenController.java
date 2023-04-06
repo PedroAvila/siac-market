@@ -1,6 +1,6 @@
-package com.example.consumirapi.presentacion.controller;
+package com.example.consumirapi.http.controller;
 
-import com.example.consumirapi.aplicacion.serviciosDistribuido.ITokenAccessService;
+import com.example.consumirapi.aplicacion.accessService.ITokenAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +14,6 @@ public class TokenController {
     private ITokenAccessService tokenAccessService;
     @PostMapping("/obtenerToken")
     public String obtenerToken(){
-        String response = tokenAccessService.obtenerToken();
-        return response;
+        return tokenAccessService.obtenerToken();
     }
 }

@@ -1,7 +1,7 @@
-package com.example.consumirapi.presentacion;
+package com.example.consumirapi.http;
 
 import com.example.consumirapi.dominio.entidadesDominio.Categoria;
-import com.example.consumirapi.presentacion.models.CategoriaDto;
+import com.example.consumirapi.http.models.CategoriaDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
