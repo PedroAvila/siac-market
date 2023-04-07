@@ -1,5 +1,7 @@
 package com.example.consumirapi.dominio.entidadesDominio;
 
+import com.example.consumirapi.dominio.entidadesDominio.enumeracion.EstadoCategoria;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;

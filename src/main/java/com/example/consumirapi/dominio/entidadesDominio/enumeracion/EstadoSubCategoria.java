@@ -1,4 +1,4 @@
-package com.example.consumirapi.dominio.entidadesDominio;
+package com.example.consumirapi.dominio.entidadesDominio.enumeracion;
 
 public enum EstadoSubCategoria {
     ACTIVO(1),

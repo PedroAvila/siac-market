@@ -2,13 +2,13 @@ package com.example.consumirapi.aplicacion.accessService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.http.HttpHeaders;
 
 
 @Service
@@ -16,12 +16,8 @@ public class TokenAccessService implements ITokenAccessService {
 
     private final String _uri = "https://login.microsoftonline.com/92cf6300-1c93-4b01-9a58-9603b66b404d/oauth2/v2.0/token";
 
-    private final RestTemplate restTemplate;
-
     @Autowired
-    public TokenAccessService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
+    private RestTemplate restTemplate;
 
     @Override
     public String obtenerToken() {

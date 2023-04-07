@@ -1,6 +1,6 @@
 package com.example.consumirapi.http.models;
 
-import com.example.consumirapi.dominio.entidadesDominio.EstadoCategoria;
+import com.example.consumirapi.dominio.entidadesDominio.enumeracion.EstadoCategoria;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
