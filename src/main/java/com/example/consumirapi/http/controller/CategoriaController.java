@@ -22,22 +22,22 @@ public class CategoriaController {
     private GenericModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<List<CategoriaDto>> GetAllAsync() {
+    @ResponseStatus(HttpStatus.OK)
+    public List<CategoriaDto> GetAllAsync() {
         var categorias = sdCategoria.GetAllAsync();
-
         List<CategoriaDto> categoriasDto = modelMapper.mapToListCategoriaDto(categorias);
-
-        return new ResponseEntity<>(categoriasDto, HttpStatus.OK);
+        return categoriasDto;
     }
 
     @PostMapping
-    public ResponseEntity<CategoriaDto> Create(@Valid @RequestBody CategoriaDto categoriaDto) {
+    @ResponseStatus(HttpStatus.OK)
+    public CategoriaDto Create(@Valid @RequestBody CategoriaDto categoriaDto) {
 
         var categoria = this.modelMapper.mapToCategoria(categoriaDto);
         sdCategoria.CreateAsync(categoria);
 
         CategoriaDto createCategoriaDto = this.modelMapper.mapToCategoriaDto(categoria);
-        return new ResponseEntity<>(createCategoriaDto, HttpStatus.CREATED);
+        return createCategoriaDto;
     }
 
     @PutMapping
