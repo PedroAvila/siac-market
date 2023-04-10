@@ -2,7 +2,10 @@ package com.example.consumirapi.dominio.serviciosDominio;
 
 import com.example.consumirapi.dominio.contratosRepositorio.ICategoriaRepository;
 import com.example.consumirapi.dominio.entidadesDominio.Categoria;
+import com.example.consumirapi.dominio.serviciosDominio.interfaces.ISdCategoria;
 import com.example.consumirapi.infraestructuraTransversal.operaciones.exceptions.FieldAlreadyExistException;
+import com.example.consumirapi.infraestructuraTransversal.operaciones.exceptions.NotFoundException;
+import org.hibernate.service.spi.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,18 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-/*
-* En esta capa com.example.consumirapi.dominio.serviciosDominio
-* La responsabilidad principal de la capa de ServiciosDominio de aplicación es manejar la lógica de negocio
-* No debe estar contaminada don responsabilidades de otra capa.
-*
-* En esta implementación cuando ocurre un error, se lanza una excepción ServiceException que contiene el mensaje de error
-* y la causa de la excepción. Además, se registra la excepción utilizando la librería de logging.
-* */
+import java.util.Optional;
+
 @Service
 public class SdCategoria implements ISdCategoria {
 
-    private static final Logger Log = LoggerFactory.getLogger(SdCategoria.class);
+    private static final Logger log = LoggerFactory.getLogger(SdCategoria.class);
 
     @Autowired
     private ICategoriaRepository categoriaRepository;
@@ -30,11 +27,11 @@ public class SdCategoria implements ISdCategoria {
     @Transactional(readOnly = true)
     public List<Categoria> GetAllAsync() {
 
-        Log.info("Inicio método GetAllAsync - obtener categorías");
+        log.info("Inicio método GetAllAsync - obtener categorías");
         try {
             return this.categoriaRepository.findAll();
         } catch (Exception e) {
-            Log.error("Error al consultar categorias: " + e.getMessage());
+            log.error("Error al consultar categorías: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -43,23 +40,42 @@ public class SdCategoria implements ISdCategoria {
     @Transactional
     public void CreateAsync(Categoria entity) {
 
-        Log.info("Inicio método CreateAsync - crear categoría");
+        log.info("Inicio método CreateAsync - crear categoría");
         try {
             boolean exist = this.categoriaRepository.existsByNombre(entity.getNombre());
             if(!exist){
                 categoriaRepository.save(entity);
             } else {
-                Log.info("La categoria ya existe");
-                throw new FieldAlreadyExistException("La categoria ya existe");
+                log.info("La categoria ya existe");
+                throw new FieldAlreadyExistException("La categoría ya existe");
             }
         } catch (Exception e){
-            Log.error("Error al registrar categoría" + e.getMessage());
+            log.error("Error al registrar categoría " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public void UpdateAsync(Categoria entity) {
+
+        log.info("Inicio método UpdateAsync - actualizar categoría");
+        try {
+            Optional<Categoria> categoriaOptional = this.categoriaRepository.findById(entity.getId());
+            if(categoriaOptional.isPresent()){
+                Categoria categoria = categoriaOptional.get();
+                categoria.setNombre(entity.getNombre());
+                categoria.setEstado(entity.getEstado());
+
+                this.categoriaRepository.save(categoria);
+                this.categoriaRepository.flush();
+            } else {
+                log.info("Error al actualizar categoría");
+                throw new NotFoundException("Error al actualizar categoría");
+            }
+        } catch (Exception e){
+            log.error("Error al actualizar categoría " + e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
 
     }
 

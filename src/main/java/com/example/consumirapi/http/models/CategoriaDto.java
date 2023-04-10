@@ -1,7 +1,5 @@
 package com.example.consumirapi.http.models;
 
-import com.example.consumirapi.dominio.entidadesDominio.enumeracion.EstadoCategoria;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -15,7 +13,7 @@ public class CategoriaDto {
     private String nombre;
 
     @NotNull
-    private EstadoCategoria estado;
+    private boolean estado = true;
 
     public Long getId() {
         return id;
@@ -33,11 +31,11 @@ public class CategoriaDto {
         this.nombre = nombre;
     }
 
-    public EstadoCategoria getEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoCategoria estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
 }

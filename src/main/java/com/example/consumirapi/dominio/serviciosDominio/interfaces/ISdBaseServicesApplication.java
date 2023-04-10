@@ -1,4 +1,4 @@
-package com.example.consumirapi.dominio.serviciosDominio;
+package com.example.consumirapi.dominio.serviciosDominio.interfaces;
 
 import java.util.List;
 

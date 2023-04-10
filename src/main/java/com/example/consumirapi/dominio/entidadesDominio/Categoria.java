@@ -1,7 +1,5 @@
 package com.example.consumirapi.dominio.entidadesDominio;
 
-import com.example.consumirapi.dominio.entidadesDominio.enumeracion.EstadoCategoria;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,7 +16,7 @@ public class Categoria implements Serializable {
     private Long id;
 
     private String nombre;
-    private EstadoCategoria estado;
+    private boolean estado;
 
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
     private List<SubCategoria> subCategorias = new ArrayList<>();
@@ -39,11 +37,11 @@ public class Categoria implements Serializable {
         this.nombre = nombre;
     }
 
-    public EstadoCategoria getEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoCategoria estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
 }
