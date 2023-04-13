@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/api/categorias")
@@ -23,32 +24,38 @@ public class CategoriaController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<CategoriaDto> GetAllAsync() {
-        var categorias = sdCategoria.GetAllAsync();
-        List<CategoriaDto> categoriasDto = modelMapper.mapToListCategoriaDto(categorias);
-        return categoriasDto;
+    public CompletableFuture<List<CategoriaDto>> getAllAsync() {
+        var futureCategorias = sdCategoria.getAllAsync();
+        return futureCategorias.thenApply(categorias -> modelMapper.mapToListCategoriaDto(categorias));
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CompletableFuture<CategoriaDto> single(@PathVariable Long id) {
+        var futureCategoria = this.sdCategoria.singleAsync(id);
+        return futureCategoria.thenApply(categoria -> this.modelMapper.mapToCategoriaDto(categoria));
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.OK)
-    public CategoriaDto Create(@Valid @RequestBody CategoriaDto categoriaDto) {
-
+    @ResponseStatus(HttpStatus.CREATED)
+    public CategoriaDto create(@Valid @RequestBody CategoriaDto categoriaDto) {
         var categoria = this.modelMapper.mapToCategoria(categoriaDto);
-        sdCategoria.CreateAsync(categoria);
-
-        CategoriaDto createCategoriaDto = this.modelMapper.mapToCategoriaDto(categoria);
-        return createCategoriaDto;
+        sdCategoria.createAsync(categoria).join();
+        return this.modelMapper.mapToCategoriaDto(categoria);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public CategoriaDto Update(@Valid @RequestBody CategoriaDto categoriaDto){
-
+    public CategoriaDto update(@Valid @RequestBody CategoriaDto categoriaDto) {
         var categoria = this.modelMapper.mapToCategoria(categoriaDto);
-        this.sdCategoria.UpdateAsync(categoria);
+        this.sdCategoria.updateAsync(categoria).join();
+        return this.modelMapper.mapToCategoriaDto(categoria);
+    }
 
-        CategoriaDto updateCategoriaDto = this.modelMapper.mapToCategoriaDto(categoria);
-        return updateCategoriaDto;
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Long id) {
+        this.sdCategoria.deleteAsync(id).join();
     }
 
     @GetMapping("/greeting")

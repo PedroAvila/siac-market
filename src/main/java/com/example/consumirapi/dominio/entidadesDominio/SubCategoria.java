@@ -1,12 +1,10 @@
 package com.example.consumirapi.dominio.entidadesDominio;
 
-import com.example.consumirapi.dominio.entidadesDominio.enumeracion.EstadoSubCategoria;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "subCategorias")
+@Table(name = "SubCategorias")
 public class SubCategoria implements Serializable {
 
     private static final long serialVersionUID = 393436279554677034L;
@@ -16,7 +14,7 @@ public class SubCategoria implements Serializable {
     private Long id;
 
     private String nombre;
-    private EstadoSubCategoria estado;
+    private boolean estado;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")
@@ -38,11 +36,11 @@ public class SubCategoria implements Serializable {
         this.nombre = nombre;
     }
 
-    public EstadoSubCategoria getEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoSubCategoria estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
 }
