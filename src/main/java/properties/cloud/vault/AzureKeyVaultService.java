@@ -1,4 +1,4 @@
-package com.example.consumirapi.web;
+package properties.cloud.vault;
 
 import com.azure.identity.DefaultAzureCredentialBuilder;
 import com.azure.security.keyvault.secrets.SecretClient;
@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class AzureKeyVaultService {
 
     private final String keyVaultUrl;
-
     private final SecretClient secretClient;
 
     public AzureKeyVaultService(String keyVaultUrl) {
@@ -24,5 +23,4 @@ public class AzureKeyVaultService {
     public String getSecret(String secretName) {
         return secretClient.getSecret(secretName).getValue();
     }
-
 }

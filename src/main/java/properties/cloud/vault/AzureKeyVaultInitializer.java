@@ -1,24 +1,21 @@
-package com.example.consumirapi.web;
+package properties.cloud.vault;
 
+import java.util.Properties;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.util.Properties;
-
+@Component
 public class AzureKeyVaultInitializer {
 
-    private final String urlPool;
+    @Value("${spring.cloud.azure.keyvault.secret.endpoint}")
+    private String azureKeyVaultEndpoint;
 
-    private Properties azureProperties;
+    private Properties azureProperties = new Properties();
 
-    public AzureKeyVaultInitializer(String urlPool) {
-        this.urlPool = urlPool;
-        azureProperties = new Properties();
-    }
-
+    @PostConstruct
     public void init(){
-        AzureKeyVaultService azureKeyVaultService = new AzureKeyVaultService(urlPool);
+        AzureKeyVaultService azureKeyVaultService = new AzureKeyVaultService(azureKeyVaultEndpoint);
         String secretUrl = azureKeyVaultService.getSecret("spring-datasource-url");
         String secretUsername = azureKeyVaultService.getSecret("spring-datasource-username");
         String secretPassword = azureKeyVaultService.getSecret("spring-datasource-password");
