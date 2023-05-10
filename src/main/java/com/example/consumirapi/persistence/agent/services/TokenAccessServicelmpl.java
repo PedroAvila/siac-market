@@ -33,17 +33,11 @@ public class TokenAccessServicelmpl implements TokenAccessService {
         map.add("client_secret", Client_Secret);
         map.add("grant_type", Grant_Type);
 
-//        Map<String, String> map = new HashMap<>();
-//        map.put("client_id", Client_Id);
-//        map.put("scope", Scope);
-//        map.put("client_secret", Client_Secret);
-//        map.put("grant_type", Grant_Type);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
-        //HttpEntity<Map<String, String>> request = new HttpEntity<>(map,headers);
         ResponseEntity<String> response = this.restTemplate.postForEntity(_uri, request, String.class);
 
         return response.getBody();
