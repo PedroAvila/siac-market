@@ -1,8 +1,8 @@
 package com.example.consumirapi.web.controller;
 
 import com.example.consumirapi.dominio.services.domain.interfaces.SdSubCategoria;
-import com.example.consumirapi.web.GenericModelMapper;
-import com.example.consumirapi.web.models.SubCategoriaDto;
+import com.example.consumirapi.application.GenericModelMapper;
+import com.example.consumirapi.application.services.application.interfaces.dtos.SubCategoriaDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

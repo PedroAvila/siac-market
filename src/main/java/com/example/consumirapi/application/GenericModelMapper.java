@@ -1,9 +1,9 @@
-package com.example.consumirapi.web;
+package com.example.consumirapi.application;
 
 import com.example.consumirapi.dominio.entities.domain.Categoria;
 import com.example.consumirapi.dominio.entities.domain.SubCategoria;
-import com.example.consumirapi.web.models.CategoriaDto;
-import com.example.consumirapi.web.models.SubCategoriaDto;
+import com.example.consumirapi.application.services.application.interfaces.dtos.CategoriaDto;
+import com.example.consumirapi.application.services.application.interfaces.dtos.SubCategoriaDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

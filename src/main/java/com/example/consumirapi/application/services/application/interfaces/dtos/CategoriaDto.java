@@ -1,17 +1,17 @@
-package com.example.consumirapi.web.models;
+package com.example.consumirapi.application.services.application.interfaces.dtos;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class SubCategoriaDto {
+public class CategoriaDto {
     private Long id;
-    @NotNull
-    private Long categoriaId;
+
     @NotBlank(message = "El nombre no puede estar vacío")
     @NotEmpty(message = "El nombre no puede estar vacío")
     @NotNull
     private String nombre;
+
     private boolean estado = true;
 
     public Long getId() {
@@ -22,14 +22,6 @@ public class SubCategoriaDto {
         this.id = id;
     }
 
-    public Long getCategoriaId() {
-        return categoriaId;
-    }
-
-    public void setCategoriaId(Long categoriaId) {
-        this.categoriaId = categoriaId;
-    }
-
     public String getNombre() {
         return nombre;
     }
@@ -38,7 +30,7 @@ public class SubCategoriaDto {
         this.nombre = nombre;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 

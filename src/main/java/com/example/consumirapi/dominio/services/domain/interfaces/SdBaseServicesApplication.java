@@ -5,7 +5,7 @@ import java.util.concurrent.CompletableFuture;
 
 public interface SdBaseServicesApplication<T> {
 
-     CompletableFuture<List<T>> getAllAsync();
+    CompletableFuture<List<T>> getAllAsync();
     CompletableFuture<T> singleAsync(Long id);
     CompletableFuture<Void> createAsync(T entity);
     CompletableFuture<Void> updateAsync(T entity);

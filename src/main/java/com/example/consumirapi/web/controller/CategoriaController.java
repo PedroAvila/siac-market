@@ -1,12 +1,12 @@
 package com.example.consumirapi.web.controller;
 
-import com.example.consumirapi.dominio.services.domain.interfaces.SdCategoria;
-import com.example.consumirapi.web.GenericModelMapper;
-import com.example.consumirapi.web.models.CategoriaDto;
+import com.example.consumirapi.application.services.application.interfaces.SaCategoria;
+import com.example.consumirapi.application.GenericModelMapper;
+import com.example.consumirapi.application.services.application.interfaces.dtos.CategoriaDto;
+import com.example.consumirapi.cross.cutting.infrastructure.operations.exceptions.custome.response.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,45 +18,39 @@ import java.util.concurrent.CompletableFuture;
 public class CategoriaController {
 
     @Autowired
-    private SdCategoria sdCategoria;
+    private SaCategoria saCategoria;
 
     @Autowired
     private GenericModelMapper modelMapper;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public CompletableFuture<List<CategoriaDto>> getAll() {
-        var futureCategorias = sdCategoria.getAllAsync();
-        return futureCategorias.thenApply(categorias -> modelMapper.mapToListCategoriaDto(categorias));
+    public CompletableFuture<ResponseData<List<CategoriaDto>>> getAll() {
+        return saCategoria.getAllAsync();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CompletableFuture<CategoriaDto> single(@PathVariable Long id) {
-        var futureCategoria = this.sdCategoria.singleAsync(id);
-        return futureCategoria.thenApply(categoria -> this.modelMapper.mapToCategoriaDto(categoria));
+    public CompletableFuture<ResponseData<CategoriaDto>> single(@PathVariable Long id) {
+        return saCategoria.singleAsync(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoriaDto create(@Valid @RequestBody CategoriaDto categoriaDto) {
-        var categoria = this.modelMapper.mapToCategoria(categoriaDto);
-        sdCategoria.createAsync(categoria).join();
-        return this.modelMapper.mapToCategoriaDto(categoria);
+    public CompletableFuture<ResponseData<Void>> create(@Valid @RequestBody CategoriaDto categoriaDto) {
+        return saCategoria.createAsync(categoriaDto);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public CategoriaDto update(@Valid @RequestBody CategoriaDto categoriaDto) {
-        var categoria = this.modelMapper.mapToCategoria(categoriaDto);
-        this.sdCategoria.updateAsync(categoria).join();
-        return this.modelMapper.mapToCategoriaDto(categoria);
+    public CompletableFuture<ResponseData<Void>> update(@Valid @RequestBody CategoriaDto categoriaDto) {
+        return saCategoria.updateAsync(categoriaDto);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable Long id) {
-        this.sdCategoria.deleteAsync(id).join();
+    public CompletableFuture<ResponseData<Void>> delete(@PathVariable Long id) {
+        return saCategoria.deleteAsync(id);
     }
 
     @GetMapping("/greeting")
